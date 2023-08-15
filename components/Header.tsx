@@ -1,25 +1,46 @@
 "use client"
-import { MagnifyingGlass, User } from "phosphor-react"
+
+import { User } from "phosphor-react"
+import { useState } from "react"
+import { signIn, useSession, signOut} from "next-auth/react"
+import Link from "next/link"
+import { SearchBar } from "./SearchBar"
 
 export const Header = () => {
-  return(
-    <header className="flex p-4 items-center justify-between sm:justify-evenly border-b-2">
-      <span className="hidden sm:block font-greco text-3xl">elysium</span>
-      
-      <div className="flex items-center">
-        <input 
-          className="sm:w-96 rounded-xl p-2 outline-none border-2 text-black mr-2 focus:border-emerald-500 " 
-          type="text"
-          placeholder="Procure por livros..."
-        />
-        <button>
-          <MagnifyingGlass className="transition-all hover:scale-105 hover:text-emerald-500" size={32}/>
-        </button>
-      </div>
+  const [isOpen, setIsOpen] = useState(false)
+  const { data: session } = useSession()
 
-      <button>
-        <User size={32}/>
-      </button>
+  return(
+    <header className="flex p-4 items-center justify-between sm:justify-evenly border-b-2 w-full bg-white z-10">
+      <Link href="/" className="hidden sm:block font-greco text-3xl">
+        elysium
+      </Link>
+
+      <SearchBar/>
+      
+      {session ? (
+        <div className="relative">
+          <span onClick={() => setIsOpen((state) => !state)} className="cursor-pointer flex flex-col items-center">
+            <img className="rounded-full" src={session.user?.image as string} width={40} alt="" />
+          </span>
+        
+          {isOpen && 
+            <div className="flex flex-col gap-3 absolute -bottom-44 bg-white p-3 border rounded-md min-w-[200px]">
+              <Link href="/profile">Perfil</Link>
+              <Link href="/share">Compartilhar</Link>
+              <a href="">Favoritos</a>
+              <button onClick={() => signOut()}>Logout</button>
+            </div>
+          }
+      </div>
+      ):(
+        <div>
+          <span className="cursor-pointer flex flex-col items-center" onClick={() => signIn()}>
+            <User size={32}/>
+            <span>Logar</span>
+          </span>
+        </div>
+      )}
     </header>
   )
 }
