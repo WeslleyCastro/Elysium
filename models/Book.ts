@@ -1,6 +1,26 @@
 import { Schema, model, models } from "mongoose";
+import { IUser } from "@/models/User"
 
-const BookSchema = new Schema({
+
+export interface BookInterface {
+  creator: IUser;
+  title: string;
+  categorie?: string;
+  author: string;
+  price?: number;
+  number_pages?: number;
+  description: string;
+  image: string;
+  rating?: number;
+  creator_rating: number
+}
+
+
+const BookSchema = new Schema<BookInterface>({
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  },
   title: {
     type: String,
     required: [true, "Titulo é obrigatorio"]
@@ -14,7 +34,6 @@ const BookSchema = new Schema({
   },
   price: {
     type: Number,
-    required: [true, "Valor é obrigatorio"]
   },
   number_pages: {
     type: Number,
@@ -27,17 +46,15 @@ const BookSchema = new Schema({
     type: String,
     required: [true, "Imagem é obrigatoria"]
   },
-  createdby: {
-    type: String,
-    required: true
-  },
   rating: {
     type: Number,
-    required: true
+  },
+  creator_rating: {
+    type: Number,
+    requed: true
   }
 })
 
-
 const Book = models.books || model("books", BookSchema)
 
-export { Book, BookSchema }
+export { Book }

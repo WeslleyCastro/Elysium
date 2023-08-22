@@ -2,7 +2,6 @@
 
 import { SessionProvider } from "next-auth/react"
 import { ReactNode } from "react"
-import { DefaultSession } from "next-auth"
 
 interface Session{
   children: ReactNode,

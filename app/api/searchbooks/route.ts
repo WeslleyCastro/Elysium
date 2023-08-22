@@ -9,6 +9,8 @@ export const GET = async(req: NextApiRequest ) => {
     connectToDB()
     const books = await Book.find({ title: { $regex: filter, $options: "i" } })
 
+    if(!books) return new Response("no books found", { status: 404 })
+
     return new Response(JSON.stringify(books), {
       status: 200
     })

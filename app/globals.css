@@ -6,16 +6,9 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* color: white */
 }	
 
-@font-face {
-  font-family: "Greconian";
-  src: url("/public/fonts/Greconian.ttf");
-}
-
-.font-greco {
-  font-family: "Greconian", sans-serif;
-}
 
 html, body{
   box-sizing: border-box;
@@ -25,4 +18,12 @@ html, body{
 
 textarea{
   resize: none;
+}
+
+.input-form{
+  @apply border rounded-md p-2 outline-emerald-500
+}
+
+.label-form{
+  @apply mt-3 mb-2
 }

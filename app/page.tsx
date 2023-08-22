@@ -1,11 +1,12 @@
 import { BannerCreate } from "@/components/BannerCreate";
-import { BookCarrousel } from "@/components/BookCarrousel";
+import { BookCarrousel } from "@/components/Carrousel";
 
 export default function Home() {
 
   return (
     <main>
-      <section className="flex bg-gradient-to-r from-emerald-500 to-emerald-800 text-center items-center justify-center lg:justify-evenly py-8">
+      
+      <section className="flex bg-gradient-to-r from-emerald-500 to-emerald-800 text-center items-center justify-center lg:justify-evenly py-8 ">
         <div className="text-white">
           <h1 className="text-5xl font-semibold">Não há nada <br/>melhor que ler</h1>
           <p className="text-zinc-100 py-4">Veja os livros melhores avaliados !</p>
@@ -13,13 +14,12 @@ export default function Home() {
         </div>
         <img className="hidden lg:block h-96" src="/images/book.svg" alt="" />
       </section>
-
+      
       <BookCarrousel/>
-
+      
       <BannerCreate/>
 
-
-      <footer className="mt-12 bg-zinc-900 h-28">
+      <footer className="mt-12 bg-zinc-900 h-28 trans">
           a
       </footer>
     </main>

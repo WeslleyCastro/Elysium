@@ -8,8 +8,12 @@ export async function GET(req: Request, res: Response) {
 
     const getBooks = await Book.find({})
 
-    return NextResponse.json(getBooks)
+    if(!getBooks)return new Response("failed to fetch all books", {
+      status: 404
+    })
 
+    return NextResponse.json(getBooks)
+    
   } catch (error) {
     return new Response("failed to fetch all books", {
       status: 500

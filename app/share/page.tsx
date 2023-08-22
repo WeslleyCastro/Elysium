@@ -4,22 +4,16 @@ import Image from "next/image"
 import { ChangeEvent, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useSession } from "next-auth/react"
-
-interface BookForm{
-  bookCategorie: String,
-  bookDescription:String,
-  bookTitle: String,
-  bookAuthor: String,
-  bookNumberPage: Number,
-  bookPrice: Number,
-  bookImage: String
-}
-
+import { useRouter } from "next/navigation"
+import { BookInterface } from "@/models/Book"
+import { StarsRating } from "@/components/StarsRating"
 
 export default function Share(){
-  const { register, handleSubmit} = useForm<BookForm>() 
+  const { register, handleSubmit, reset} = useForm<BookInterface>() 
+  const [insertRating, setInsertRating] = useState(0)
   const [image64, setImage64] = useState("")
   const { data: session } = useSession()
+  const router = useRouter()
   
   const handleChangeImage = async(e: ChangeEvent<HTMLInputElement>) => {
     const imageConvert = await convertToBase64(e.target.files![0])
@@ -39,108 +33,126 @@ export default function Share(){
     })
   }
 
-  const onSubmit = async(data: BookForm) => {  
+  const onSubmit = async(data: BookInterface  ) => {  
     try {
-      const response = await fetch("/api/createbook",{
+      const response = await fetch("/api/books/newbook",{
         method: "POST",
         body: JSON.stringify({
-          title: data.bookTitle,
-          description: data.bookDescription,
-          price: data.bookPrice,
-          author: data.bookAuthor,
-          number_page: data.bookNumberPage,
-          categorie: data.bookCategorie,
+          title: data.title,
+          description: data.description,
+          price: data.price,
+          author: data.author,
+          number_pages: data.number_pages,
+          categorie: data.categorie,
           image: image64,
-          createby: session?.user?.id
+          createdby: session?.user?.id,
+          creator_rating: insertRating
         })
       })
+      
     } catch (error) {
       console.log(error)
+    } finally {
+      reset()
+      router.push("/")
     }
   } 
 
   return(
     <section className="w-full flex items-center justify-center">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col lg:flex-row justify-evenly w-full p-4 mt-16">
-        
-      <div className="p-2 h-[450px]">
-        <div className="rounded-md h-full mb-3 flex items-center justify-center">
-          {image64 && <Image src={image64} width={350} height={350} alt=""/>}
-        </div>
-            
-          <label className="my-3" htmlFor="">Selecione a imagem do Livro</label><br/>
-          
+      
+      {/* Form select image */}
+      <div className="p-2 flex flex-col justify-center gap-2">
+          {image64 && (
+            <Image 
+              src={image64} 
+              width={350} 
+              height={350} 
+              alt="Imagem do livro selecionado"
+            />
+          )}
+
+          <label className="font-medium" htmlFor="userImage">
+            Selecione a imagem do Livro
+          </label>
+
           <input
+            className="file:rounded-xl file:py-2 file:bg-emerald-500 file:text-white file:font-bold file:px-4 file:transition file:border-none file:hover:bg-emerald-600"
             required
             onChange={handleChangeImage}
             type="file" 
             accept="image/*"
+            id="userImage"
           />
       </div>
 
+        {/* Form informations */}
         <div className="flex flex-col lg:w-1/3 mt-20 lg-mt-0">       
-          <label className="mt-3 mb-2" htmlFor="bookTitle">Título</label>
+          <label className="label-form" htmlFor="title">Título</label>
           <input
             required
-            className="border rounded-md p-2 outline-emerald-500"
+            className="input-form"
             type="text"
             placeholder="Digite o nome do livro"
-            id="bookTitle"
-            {...register("bookTitle")}
+            id="title"
+            {...register("title")}
           />
 
-          <label className="mt-3 mb-2" htmlFor="bookCategorie">Categoria</label>
+          <label className="label-form" htmlFor="categorie">Categoria</label>
           <input
-            className="border rounded-md p-2 outline-emerald-500"
+            className="input-form"
             type="text"
             placeholder="Categoria"
-            id="bookCategorie"
-            {...register("bookCategorie")}
+            id="categorie"
+            {...register("categorie")}
           />
 
-          <label className="mt-3 mb-2" htmlFor="bookDescription">Descrição</label>
+          <label className="label-form" htmlFor="description">Descrição</label>
           <textarea
             required
             className="p-2 border outline-emerald-500"
             cols={30} rows={3}
-            placeholder="Fale o que achou"
-            id="bookDescription"
-            {...register("bookDescription")}
+            placeholder="Descrição do livro"
+            id="description"
+            {...register("description")}
           />
 
-          <label className="mt-3 mb-2" htmlFor="bookAuthor">Autor</label>
+          <label className="label-form" htmlFor="author">Autor</label>
           <input
             required
-            className="border rounded-md p-2 outline-emerald-500"
+            className="input-form"
             type="text"
             placeholder="Nome do autor"
-            id="bookAuthor"
-            {...register("bookAuthor")}
+            id="author"
+            {...register("author")}
           />
 
-          <label className="mt-3 mb-2" htmlFor="bookNumberPage">Número de Páginas</label>
+          <label className="label-form" htmlFor="number_pages">Número de Páginas</label>
           <input
-            className="border rounded-md p-2 outline-emerald-500"
+            className="input-form"
             type="Number"
             placeholder="Número de páginas"
-            id="bookNumberPage"
-            {...register("bookNumberPage")}
+            id="number_pages"
+            {...register("number_pages")}
           />
 
-          <label className="mt-3 mb-2" htmlFor="bookPrice">Price</label>
+          <label className="label-form" htmlFor="price">Price</label>
           <input
             required
-            className="border rounded-md p-2 outline-emerald-500"
+            className="input-form"
             type="Number"
             placeholder="Valor do livro"
-            id="bookPrice"
-            {...register("bookPrice")}
+            id="price"
+            {...register("price")}
           />
+
+          <label className="label-form">Avaliação</label>
+          <StarsRating size={20} insert={setInsertRating} weigth={insertRating} />
 
           <button
             type="submit"
-            className="bg-emerald-500 text-white font-bold py-2 px-4 rounded-lg my-4"
-          >
+            className="bg-emerald-500 text-white font-bold py-2 px-4 rounded-lg my-4">
             Publicar
           </button>
           

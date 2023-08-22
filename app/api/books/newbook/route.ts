@@ -2,13 +2,32 @@ import { Book } from "@/models/Book";
 import { connectToDB } from "@/utils/database";
 
 export const POST = async(req: Request) => {
-  const data = await req.json()
+  const { 
+    author, 
+    categorie, 
+    createdby, 
+    description, 
+    image,
+    number_pages, 
+    price, 
+    title,
+    creator_rating
+} = await req.json()
 
   try {
     await connectToDB()
 
     const newBook = new Book({
-      ...data
+      creator:
+      createdby,
+      description, 
+      image,
+      number_pages, 
+      price, 
+      title,
+      author, 
+      categorie,
+      creator_rating 
     })
     
     await newBook.save()
