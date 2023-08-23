@@ -1,3 +1,5 @@
+import { IUser } from "@/models/User";
+
 export interface BookCardProps {
   _id: string,
   title: string, 
@@ -5,4 +7,5 @@ export interface BookCardProps {
   rating: number,
   author: string,
   creator_rating: number,
+  creator?: IUser
 }

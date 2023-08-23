@@ -1,25 +1,31 @@
-"use client"
+import { ProfileHeader } from "@/components/Profile/ProfileHeader"
+import { BookCardProps } from "@/@types/bookCardProps"
+import { BookCarrousel } from "@/components/BookCarrousel"
 
-import { useSession } from "next-auth/react"
+interface ProfileProps {
+  searchParams: {
+    user: string
+  }
+}
 
-export default function Profile(){
-  const { data: session } = useSession()
-  
+export default async function Profile({searchParams}: ProfileProps){
+  const response = await fetch(`http://localhost:3000/api/profile?user=${searchParams.user}`, {cache: "no-store"})
+  const data: BookCardProps[] = await response.json()
+
+  const { creator } = data[0]
+  console.log(creator)
   return(
     <section className="p-4">
-        <div className="flex items-center gap-8">
-          <img
-            className="rounded-full w-28 outline outline-4 outline-emerald-500"
-            src={session?.user?.image!}
-            alt=""
-          />
-          <div>
-            <h1 className="font-semibold text-2xl">
-              {session?.user?.name}
-            </h1>
-            <span className="italic text-gray-400">Descrição do usuario</span>
-          </div>
-        </div>
+      <ProfileHeader 
+        userName={creator!.username}
+        userImage={creator!.image}
+        
+      />
+      
+      <section className="mt-24">
+        <span className="pl-20 text-xl font-semibold">Livros compartilhados</span>
+        <BookCarrousel books={data}/>
+      </section>
     </section>
   )
 }

@@ -10,6 +10,7 @@ interface Params {
 }
 
 export async function GET(req: Request, {params}: Params) {
+  
   try {
     connectToDB()
 
@@ -20,7 +21,6 @@ export async function GET(req: Request, {params}: Params) {
       return new Response("Failed to find book", {status: 404})
     }
     
-
     return NextResponse.json({getBookByid, getCommentsByBookId})
   } catch (error) {
     console.log(error)
@@ -40,7 +40,6 @@ export async function POST(req: Request, {params}: Params) {
 
   if(commentRatingCount == 0){
     totalRating = getBookByid.creator_rating + commentRating / 2
-    console.log("aqui")
   }else{
     totalRating = (commentRatingCount + commentRating) / (getCommentsByBookId.length + 2)
   }

@@ -1,7 +1,10 @@
 import { Book } from "@/models/Book";
 import { connectToDB } from "@/utils/database";
+import { revalidatePath } from "next/cache";
 
 export const POST = async(req: Request) => {
+  const rating = 0
+  
   const { 
     author, 
     categorie, 
@@ -11,7 +14,7 @@ export const POST = async(req: Request) => {
     number_pages, 
     price, 
     title,
-    creator_rating
+    creator_rating,
 } = await req.json()
 
   try {
@@ -27,10 +30,13 @@ export const POST = async(req: Request) => {
       title,
       author, 
       categorie,
-      creator_rating 
+      creator_rating,
+      rating
     })
     
     await newBook.save()
+
+    revalidatePath("api/books")
    
     return new Response(JSON.stringify(newBook), {
       status: 201

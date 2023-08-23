@@ -33,7 +33,7 @@ export default function Share(){
     })
   }
 
-  const onSubmit = async(data: BookInterface  ) => {  
+  const onSubmit = async(data: BookInterface) => {  
     try {
       const response = await fetch("/api/books/newbook",{
         method: "POST",

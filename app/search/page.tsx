@@ -9,15 +9,22 @@ interface SearchProps{
 
 export default async function SearchPage({searchParams}: SearchProps){
  
-  const response = await fetch(`http://localhost:3000/api/searchbooks?q=${searchParams.q}`, { cache: 'no-store' })  
-  const data = await response.json()
+  let data
   
+  if(searchParams.q == "all"){
+    const response = await fetch(`http://localhost:3000/api/books`)  
+    data = await response.json()
+  }else {
+    const response = await fetch(`http://localhost:3000/api/searchbooks?q=${searchParams.q}`, {cache: "no-store"})  
+    data = await response.json()
+  }
+
 
   return(
     <section className="p-4">
-      <h1 className="text-center mt-4 mb-12 text-xl font-bold">Buscas para {searchParams.q}</h1>
+      <h1 className="text-center mt-4 mb-12 text-xl font-bold">{searchParams.q == "all" ? "Todos os livros" : `Buscas para ${searchParams.q}`}</h1>
 
-      <div className="flex gap-4">
+      <div className="flex justify-center lg:justify-start gap-16 flex-wrap">
         {data.map((book: BookCardProps) => (
           <BookCard
             _id={book._id}

@@ -12,8 +12,8 @@ export const Header = () => {
   const { data: session } = useSession()
 
   return(
-    <header className="flex p-6 items-center justify-between sm:justify-evenly border-b-2 w-full z-10">
-      <Link href="/" className="hidden sm:block text-3xl">
+    <header className="flex p-6 items-center justify-between sm:justify-evenly border-b-2 w-full">
+      <Link href="/" className="hidden sm:block">
         <Image src="/images/elysium.svg" alt="Logo" width={130} height={23} />
       </Link>
 
@@ -27,7 +27,7 @@ export const Header = () => {
         
           {isOpen && 
             <div className="flex flex-col gap-5 absolute rigth right-0 -bottom-52 bg-white p-3 border rounded-md min-w-[200px] text-sm">
-              <Link href="/profile">Perfil</Link>
+              <Link href={`/profile?user=${session?.user.id}`}>Perfil</Link>
               <Link href="/share">Compartilhar</Link>
               <a href="">Favoritos</a>
               <button className="rounded-2xl bg-black text-white py-2" onClick={() => signOut()}>Logout</button>
