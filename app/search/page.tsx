@@ -15,7 +15,7 @@ export default async function SearchPage({searchParams}: SearchProps){
     const response = await fetch(`http://localhost:3000/api/books`)  
     data = await response.json()
   }else {
-    const response = await fetch(`http://localhost:3000/api/searchbooks?q=${searchParams.q}`, {cache: "no-store"})  
+    const response = await fetch(`http://localhost:3000/api/books/search?q=${searchParams.q}`, {cache: "no-store"})  
     data = await response.json()
   }
 

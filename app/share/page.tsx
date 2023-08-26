@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { BookInterface } from "@/models/Book"
 import { StarsRating } from "@/components/StarsRating"
+import { imageToBase64 } from "@/utils/convertToBase64"
 
 export default function Share(){
   const { register, handleSubmit, reset} = useForm<BookInterface>() 
@@ -14,24 +15,18 @@ export default function Share(){
   const [image64, setImage64] = useState("")
   const { data: session } = useSession()
   const router = useRouter()
+
   
   const handleChangeImage = async(e: ChangeEvent<HTMLInputElement>) => {
-    const imageConvert = await convertToBase64(e.target.files![0])
-    setImage64(imageConvert as string)
+    await imageToBase64(e)
+      .then((response) => {
+        setImage64(response as string)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
-  const convertToBase64 = (file: Blob) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader()
-      fileReader.readAsDataURL(file)
-      fileReader.onload = () => {
-        resolve(fileReader.result)
-      }
-      fileReader.onerror = (error) => {
-        reject(error)
-      }
-    })
-  }
 
   const onSubmit = async(data: BookInterface) => {  
     try {
@@ -152,7 +147,7 @@ export default function Share(){
 
           <button
             type="submit"
-            className="bg-emerald-500 text-white font-bold py-2 px-4 rounded-lg my-4">
+            className="button-form">
             Publicar
           </button>
           

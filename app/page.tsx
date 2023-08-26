@@ -1,5 +1,5 @@
 import { BannerCreate } from "@/components/BannerCreate";
-import { BookCarrousel } from "@/components/BookCarrousel";
+import { BookCarrousel } from "@/components/BookCarousel";
 import { BookCardProps } from "@/@types/bookCardProps";
 import { AiOutlineLink } from "react-icons/ai";
 import Link from "next/link";

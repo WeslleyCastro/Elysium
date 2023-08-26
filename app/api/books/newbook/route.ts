@@ -35,8 +35,6 @@ export const POST = async(req: Request) => {
     })
     
     await newBook.save()
-
-    revalidatePath("api/books")
    
     return new Response(JSON.stringify(newBook), {
       status: 201
