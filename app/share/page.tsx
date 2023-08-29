@@ -147,7 +147,7 @@ export default function Share(){
 
           <button
             type="submit"
-            className="button-form">
+            className="button my-4">
             Publicar
           </button>
           

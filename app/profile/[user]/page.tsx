@@ -4,26 +4,29 @@ import { BookCarrousel } from "@/components/BookCarousel"
 import { IUser } from "@/models/User"
 
 interface ProfileProps {
-  params: {
-    user: string
+  searchParams: {
+    id: string
   }
 }
 
-export default async function Profile({params}: ProfileProps){
+export default async function Profile({searchParams}: ProfileProps){
+
   const [userDataResponse, userBooksDataResponse] = await Promise.all([
-     fetch(`http://localhost:3000/api/users/${params.user}`, {cache: "no-store"}),
-     fetch(`http://localhost:3000/api/books/search/bycreator/${params.user}`, {cache: "no-store"})
+    fetch(`http://localhost:3000/api/users?id=${searchParams.id}`, { cache: "no-store"}),
+    fetch(`http://localhost:3000/api/books/search/bycreator/${searchParams.id}`, {cache: "no-store"})
   ])
   
-  const userData: IUser = await userDataResponse.json()
+  const user: IUser = await userDataResponse.json()
   const userBooks: BookCardProps[] = await userBooksDataResponse.json()
 
+
   return(
-    <section className="p-4">
-      <ProfileHeader 
-        userName={userData.username}
-        userImage={userData.image}
-        userDescription={userData.description}
+    <section className="p-6">
+      <ProfileHeader
+        _id={user._id}
+        userName={user.username}
+        userImage={user.image}
+        userDescription={user.description}
       />
       <section className="mt-24">
         

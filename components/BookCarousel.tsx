@@ -20,7 +20,9 @@ export const BookCarrousel = ({ books }: BookCarrouselProps) => {
     1024: {
       slidesPerView: 3,
     },
-
+    800: {
+      slidesPerView: 2,
+    }
   }
 
   return(

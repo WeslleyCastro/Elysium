@@ -41,7 +41,7 @@ export default async function UserBook({params}: UserBookProps){
         <div className="lg:w-2/6"> 
           <h1 className="font-medium text-2xl">{book.title}</h1>
             <span className="italic text-sm text-gray-500">
-              por <Link href={`/profile?user=${book.creator._id}`} className="underline">{book.creator.username}</Link>
+              por <Link href={`/profile/${book.creator.username}?id=${book.creator._id}`} className="underline">{book.creator.username}</Link>
             </span>
             <p className="text-justify mt-4 indent-8">{book.description}</p>
         </div>

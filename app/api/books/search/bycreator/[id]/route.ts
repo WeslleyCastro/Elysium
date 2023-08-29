@@ -1,13 +1,20 @@
 import { Book } from "@/models/Book"
 import { connectToDB } from "@/utils/database"
 
-export const GET = async(req: Request, params: {id: string}) => {
-  const { id } = params
+interface requestParams{
+  params: {
+    id: string
+  }
+}
+
+export const GET = async(req: Request, params: requestParams) => {
+  
+  const userId = params.params.id
 
   try {
     connectToDB()
 
-    const booksByUser = await Book.find({creator: id})
+    const booksByUser = await Book.find({creator: userId})
 
     if(!booksByUser)
     return new Response("failed to fetch books by user", {

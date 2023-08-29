@@ -29,7 +29,7 @@ const CommentSchema = new Schema({
   commentRating:{
     type: Number,
     required: true,
-  }
+  },
 })
 
 const comment = models.comments || model("comments", CommentSchema);

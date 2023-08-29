@@ -1,7 +1,7 @@
 import { Schema, model, models } from "mongoose"
 
 export interface IUser {
-  _id?: string,
+  _id: string,
   email: {
     type: string,
     unique: string | boolean,

@@ -20,6 +20,11 @@ textarea{
   resize: none;
 }
 
+
+.button {
+  @apply bg-emerald-500 text-white font-bold py-2 px-4 rounded-lg transition hover:bg-emerald-700
+}
+
 .input-form{
   @apply border rounded-md p-2 outline-emerald-500
 }
@@ -28,6 +33,6 @@ textarea{
   @apply mt-3 mb-2
 }
 
-.button-form{
-  @apply bg-emerald-500 text-white font-bold py-2 px-4 rounded-lg my-4 transition hover:bg-emerald-700
+.center-modal{
+  @apply fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
 }

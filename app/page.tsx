@@ -12,7 +12,7 @@ export default async function Home() {
     <main>
       <section className="flex bg-gradient-to-r from-emerald-500 to-emerald-800 text-center items-center justify-center lg:justify-evenly py-8 ">
         <div className="text-white">
-          <h1 className="text-5xl font-semibold">Não há nada <br/>melhor que ler</h1>
+          <h1 className=" text-3xl sm:text-5xl font-semibold">Não há nada <br/>melhor que ler</h1>
           <p className="text-zinc-100 py-4">Veja os livros melhores avaliados !</p>
           <button className="transition bg-white rounded-2xl py-2 px-8 text-emerald-400 font-semibold hover:scale-110">Procurar</button>
         </div>

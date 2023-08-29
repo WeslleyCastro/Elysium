@@ -16,7 +16,7 @@ export const Header = () => {
   return(
     <header className="flex p-6 items-center justify-between sm:justify-evenly border-b-2 w-full">
       <Link href="/" className="hidden sm:block">
-        <Image src="/images/elysium.svg" alt="Logo" width={130} height={23} />
+        <Image src="/images/elysium.svg" alt="Logo elysium" width={130} height={23} />
       </Link>
 
       <SearchBar/>
@@ -29,7 +29,7 @@ export const Header = () => {
         
           {isOpen && 
             <div className="flex flex-col gap-5 absolute rigth right-0 -bottom-52 bg-white p-3 border rounded-md min-w-[200px] text-sm">
-              <Link href={`/profile/${session?.user.name}`}>Perfil</Link>
+              <Link href={`/profile/${session?.user.name}?id=${session?.user.id}`}>Perfil</Link>
               <Link href="/share">Compartilhar</Link>
               <a href="">Favoritos</a>
               <button className="rounded-2xl bg-black text-white py-2" onClick={() => signOut()}>Logout</button>
