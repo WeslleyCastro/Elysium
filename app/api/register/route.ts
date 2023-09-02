@@ -1,10 +1,12 @@
 import User from "@/models/User";
 import { connectToDB } from "@/utils/database";
 import { NextResponse } from "next/server";
+import { ProfileImageBase64 } from "@/public/images/ProfileImageBase64";
+
 import bcrypt from "bcryptjs";
 
 export const POST = async(req: Request) => {
-  const { email, username, image, password } = await req.json()
+  const { email, username, password } = await req.json()
 
   try {
     connectToDB()
@@ -23,8 +25,8 @@ export const POST = async(req: Request) => {
     const newUser = new User({
       email,
       username,
-      image,
-      password: hashPassword
+      password: hashPassword,
+      image: ProfileImageBase64
     })
 
     await newUser.save()

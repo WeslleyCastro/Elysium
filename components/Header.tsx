@@ -11,8 +11,6 @@ export const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
   const { data: session } = useSession()
 
-  const profileImage = session?.user?.image ? session.user.image : "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"
-
   return(
     <header className="flex p-6 items-center justify-between sm:justify-evenly border-b-2 w-full">
       <Link href="/" className="hidden sm:block">
@@ -24,7 +22,7 @@ export const Header = () => {
       {session ? (
         <div className="relative">
           <span onClick={() => setIsOpen((state) => !state)} className="cursor-pointer flex flex-col items-center">
-            <img className="rounded-full" src={profileImage} width={40} alt="imagem do usuario" />
+            <img className="rounded-full" src={session?.user?.image || ""} width={40} alt="imagem do usuario" />
           </span>
         
           {isOpen && 

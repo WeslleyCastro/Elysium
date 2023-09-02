@@ -1,5 +1,7 @@
 import { BookCardProps } from "@/@types/bookCardProps"
 import { BookCard } from "@/components/BookCard"
+import { BookCardSkeleton } from "@/components/CarouselSkeleton"
+import { Suspense } from "react"
 
 interface SearchProps{
   searchParams: {
@@ -8,7 +10,7 @@ interface SearchProps{
 }
 
 export default async function SearchPage({searchParams}: SearchProps){
- 
+
   let data
   
   if(searchParams.q == "all"){
@@ -26,18 +28,19 @@ export default async function SearchPage({searchParams}: SearchProps){
 
       <div className="flex justify-center lg:justify-start gap-16 flex-wrap">
         {data.map((book: BookCardProps) => (
-          <BookCard
-            _id={book._id}
-            image={book.image}
-            rating={book.rating}
-            title={book.title}
-            key={book._id}
-            author={book.author}
-            creator_rating={book.creator_rating}
-          />
+          <Suspense fallback={<BookCardSkeleton/>}>
+            <BookCard
+              _id={book._id}
+              image={book.image}
+              rating={book.rating}
+              title={book.title}
+              key={book._id}
+              author={book.author}
+              creator_rating={book.creator_rating}
+            />
+          </Suspense>
         ))}
       </div>
-
     </section>
   )
 }

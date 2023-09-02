@@ -20,11 +20,12 @@ export default async function Home() {
       </section>
       
       <section className="mt-24">
-        <Link href="/search?q=all" className="flex gap-2 font-semibold text-xl hover:text-emerald-500 lg:pl-20 ">
-         Ver todos livros <AiOutlineLink size={25}/>
+        <Link href="/search?q=all" className="flex gap-2 font-semibold text-xl hover:text-emerald-500 pl-8 lg:pl-20 w-72 ">
+          Ver todos livros <AiOutlineLink size={25}/>
         </Link>
         
         <BookCarrousel books={data}/>
+       
       </section>
 
       <BannerCreate/>

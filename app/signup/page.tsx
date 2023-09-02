@@ -1,10 +1,8 @@
 "use client"
 
-import { imageToBase64 } from "@/utils/convertToBase64"
-import Image from "next/image"
-import { ChangeEvent, useState } from "react"
+import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
-
+import { toast } from "react-toastify"
 
 interface IFormInput {
   username: string,
@@ -12,21 +10,9 @@ interface IFormInput {
   password: string
 }
 
-
 export default function SignUpPage() {
-  const [image64, setImage64] = useState("")
-
-  const { register, handleSubmit, reset} = useForm<IFormInput>()
-
-  const handleChangeImage = async(e: ChangeEvent<HTMLInputElement>) => {
-    await imageToBase64(e)
-      .then((response) => {
-        setImage64(response as string)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
+  const { register, handleSubmit, reset } = useForm<IFormInput>()
+  const router = useRouter()
 
   const onsubmit = async(data: IFormInput) => {
     try {
@@ -36,57 +22,52 @@ export default function SignUpPage() {
           username: data.username,
           email: data.email,
           password: data.password,
-          image: image64
         })
       })
+      .then(() => {
+        reset()
+        router.push("/signin")
+        toast.success("Registrado com sucesso")
+      })
     } catch (error) {
+      toast.error("Erro ao registrar")
       console.log(error)
     }
-   
   }
 
   return(
-    <section className="flex mt-28 justify-center">
-      <form onSubmit={handleSubmit(onsubmit)} className="flex flex-col max-w-[350px]">
-        <div className="flex flex-col gap-4 mb-4"> 
-          {image64 !== "" && (
-            <Image 
-              src={image64}
-              width={90} 
-              height={90}
-              alt="imagem selecionada"  
-              className="bg-gray-400 rounded-full border-emerald-500 w-24 h-24 object-cover"
-            />
-          )}
-          <input type="file" onChange={handleChangeImage}/>
-        </div>
+    <section className="flex mt-28 justify-center w-full">
+      <form onSubmit={handleSubmit(onsubmit)} className="flex flex-col w-80">
+        <label htmlFor="username" className="label-form">Usuario</label>
+        <input 
+          className="input-form"
+          type="text" 
+          id="username"
+          placeholder="Nome de usuario"
+          {...register("username")}
+        />
+
+        <label htmlFor="email" className="label-form">Email</label>
+        <input
+          className="input-form"
+          type="email" 
+          placeholder="Email"
+          id="email"
+          {...register("email")}
+        />
+
+        <label htmlFor="password" className="label-form">Senha</label>
+        <input 
+          className="input-form"
+          type="password" 
+          id="password"
+          placeholder="Senha"
+          {...register("password")}
+        />
         
-          <label htmlFor="" className="label-form">Usuario</label>
-          <input 
-            className="input-form"
-            type="text" 
-            placeholder="Nome de usuario"
-            {...register("username")}
-          />
-
-          <label htmlFor="" className="label-form">Email</label>
-          <input
-            className="input-form"
-            type="email" 
-            placeholder="Email"
-            {...register("email")}
-          />
-
-          <label htmlFor="" className="label-form">Senha</label>
-          <input 
-            className="input-form"
-            type="password" 
-            placeholder="Senha"
-            {...register("password")}
-          />
-          
-          <button className="button-form">Registrar-se</button>
+        <button className="button mt-4">Registrar-se</button>
       </form>
     </section>
+     
   )
 }

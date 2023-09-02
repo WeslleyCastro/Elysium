@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation"
 import { BookInterface } from "@/models/Book"
 import { StarsRating } from "@/components/StarsRating"
 import { imageToBase64 } from "@/utils/convertToBase64"
+import { toast } from "react-toastify"
 
 export default function Share(){
   const { register, handleSubmit, reset} = useForm<BookInterface>() 
@@ -15,7 +16,6 @@ export default function Share(){
   const [image64, setImage64] = useState("")
   const { data: session } = useSession()
   const router = useRouter()
-
   
   const handleChangeImage = async(e: ChangeEvent<HTMLInputElement>) => {
     await imageToBase64(e)
@@ -26,7 +26,6 @@ export default function Share(){
         console.log(error)
       })
   }
-
 
   const onSubmit = async(data: BookInterface) => {  
     try {
@@ -44,14 +43,18 @@ export default function Share(){
           creator_rating: insertRating
         })
       })
-      
+
+      toast.success("Livro publicado com sucesso")
+      router.push("/")
     } catch (error) {
+      toast.error("Erro ao publicar livro")
+
       console.log(error)
     } finally {
       reset()
-      router.push("/")
     }
   } 
+
 
   return(
     <section className="w-full flex items-center justify-center">
@@ -144,13 +147,11 @@ export default function Share(){
 
           <label className="label-form">Avaliação</label>
           <StarsRating size={20} insert={setInsertRating} weigth={insertRating} />
-
-          <button
-            type="submit"
-            className="button my-4">
-            Publicar
-          </button>
-          
+            <button
+              type="submit"
+              className="button my-4">
+              Publicar
+            </button>
         </div>
       </form>
     </section>

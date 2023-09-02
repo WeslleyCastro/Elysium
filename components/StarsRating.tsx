@@ -24,8 +24,8 @@ export const StarsRating = ({ rating, insert, weigth, size}: StarsRatingProps) =
      }): 
      array.map((index) => {
       return (
-        <button type="button" onClick={() => onClickStar(index)}>
-          <Star key={index} weight={index <= weigth! ? "fill" : "light"} size={size}  color="#FBBF24"/>
+        <button key={index} type="button" onClick={() => onClickStar(index)}>
+          <Star weight={index <= weigth! ? "fill" : "light"} size={size}  color="#FBBF24"/>
         </button>
       )})}
       <span className="text-xs ml-1">{rating}</span>

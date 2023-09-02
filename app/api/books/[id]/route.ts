@@ -10,18 +10,17 @@ interface Params {
 }
 
 export async function GET(req: Request, {params}: Params) {
-  
   try {
     connectToDB()
 
     const getBookByid = await Book.findById(params.id).populate("creator")
-    const getCommentsByBookId = await CommentModel.find({commentForBook: params.id}).populate("creator")
+  
     
     if(!getBookByid){
       return new Response("Failed to find book", {status: 404})
     }
     
-    return NextResponse.json({getBookByid, getCommentsByBookId})
+    return NextResponse.json({getBookByid})
   } catch (error) {
     console.log(error)
     return new Response("Failed to find book", {status: 404})

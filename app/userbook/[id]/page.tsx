@@ -1,4 +1,4 @@
-import { Comments } from "@/components/Comments"
+import { Comments } from "@/components/Comments/Comments"
 import { StarsRating } from "@/components/StarsRating"
 import { BookInterface } from "@/models/Book"
 import { CommentInterface } from "@/models/Comment"
@@ -46,10 +46,11 @@ export default async function UserBook({params}: UserBookProps){
             <p className="text-justify mt-4 indent-8">{book.description}</p>
         </div>
       </div>
+     
       <section className="sm:mt-28">
         <Comments userComments={userComments} bookId={params.id}/>
       </section>
-
+      
     </section>
   )
 }

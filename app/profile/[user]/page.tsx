@@ -21,15 +21,14 @@ export default async function Profile({searchParams}: ProfileProps){
 
 
   return(
-    <section className="p-6">
+    <section>
       <ProfileHeader
         _id={user._id}
         userName={user.username}
         userImage={user.image}
         userDescription={user.description}
       />
-      <section className="mt-24">
-        
+      <section className="mt-36">
         {userBooks.length > 0 ? (
           <>
             <span className="pl-20 text-xl font-semibold">Livros compartilhados</span>

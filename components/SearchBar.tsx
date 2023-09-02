@@ -10,13 +10,13 @@ interface SearchBarForm{
 
 export const SearchBar = () => {
   const router = useRouter()
-  const { register, handleSubmit} = useForm<SearchBarForm>()
+  const { register, handleSubmit, reset} = useForm<SearchBarForm>()
 
   const onSubmit = (data: SearchBarForm) => {
     if(!data.searchInput) return
     router.push(`/search?q=${data.searchInput}`)
+    reset()
   }
-
 
   return(
     <form onSubmit={handleSubmit(onSubmit)} className="flex items-center">
@@ -30,6 +30,5 @@ export const SearchBar = () => {
         <MagnifyingGlass className="transition-all hover:scale-105 hover:text-emerald-500" size={32}/>
       </button>
     </form>
-
   )
 }
