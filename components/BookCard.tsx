@@ -13,7 +13,13 @@ export const BookCard = ({ title, image, rating, _id, author, creator_rating}: B
 
   return(
     <Link href={`/userbook/${_id}`} className="flex flex-col justify-center transition hover:scale-110 min-h-[450px] max-w-[230px]">
-      <Image className="rounded-md" src={image} height={320} width={210} alt="Imagem do livro" />
+      <Image 
+        className="rounded-md object-cover max-h-[300px]" 
+        src={image} 
+        height={320} 
+        width={210} 
+        alt="Imagem do livro"  
+      />
       <span title={title}>{newTitle}</span>
       <span className="pb-1 text-xs italic text-gray-500">{author}</span>
       <StarsRating size={16} rating={verifyRating}/>

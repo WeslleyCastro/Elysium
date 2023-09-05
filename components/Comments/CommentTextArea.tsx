@@ -5,25 +5,23 @@ import { useSession } from "next-auth/react"
 import { PaperPlaneRight } from "phosphor-react"
 import { StarsRating } from "../StarsRating"
 import { useState } from "react"
+import { toast } from "react-toastify"
+import { CommentsProps } from "./Comments"
  
 interface CommentForm {
   comment: string
 }
 
-interface CommentTextAreaProps {
-  bookId: string,
-}
-
-export const CommentTextArea = ({bookId}: CommentTextAreaProps) => {
+export const CommentTextArea = ({ bookId }: CommentsProps) => {
   const [insertRating, setInsertRating] = useState(0)
   const { register, handleSubmit, reset} = useForm<CommentForm>() 
   const {data: session} = useSession()
 
   const onSubmit = async(data: {comment: string} ) => {
-    if(insertRating == 0) return alert("Avalie o livro antes de comentar")
+    if(insertRating == 0) return toast.error("Você precisa avaliar o livro")
     
     try {
-      const response = await fetch(`../api/books/${bookId}`, {
+      const response = await fetch(`../api/books/${bookId}/comments`, {
         method: "POST",
         body: JSON.stringify({
           createdBy: session?.user?.id,
@@ -44,7 +42,7 @@ export const CommentTextArea = ({bookId}: CommentTextAreaProps) => {
       <form onSubmit={handleSubmit(onSubmit)} className="mt-4 flex flex-col gap-4">
         <div className="flex items-center gap-4">
           <textarea
-            className="text-sm p-2 border rounded-lg min-w-[300px]"
+            className="text-sm p-2 border rounded-lg min-w-[300px] outline-emerald-500"
             placeholder="Digite seu comentario..."
             rows={4}
             required
@@ -57,7 +55,7 @@ export const CommentTextArea = ({bookId}: CommentTextAreaProps) => {
         <StarsRating size={20} insert={setInsertRating} weigth={insertRating}/>
       </form> 
       ):( 
-      <p className="text-sm">Faça login para comentar</p>
+        <p className="text-sm">Faça login para comentar</p>
       )}
     </>
   )

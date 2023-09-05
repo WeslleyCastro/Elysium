@@ -5,19 +5,18 @@ import { ProfileImageBase64 } from "@/public/images/ProfileImageBase64";
 
 import bcrypt from "bcryptjs";
 
-export const POST = async(req: Request) => {
+
+export const POST = async(req: Request, res: NextResponse) => {
   const { email, username, password } = await req.json()
-
+  
   try {
-    connectToDB()
+    await connectToDB()
 
-    const userExist = await User.findOne({ email })
-
+    const userExist = await User.findOne({ email: email })
+    
+    
     if(userExist) {
-      return NextResponse.json({
-        status: 404,
-        message: "User already exist"
-      })
+      return NextResponse.json({error: "Email já cadastrado", type: "email"}, {status: 400})
     }
 
     const hashPassword = await bcrypt.hash(password, 10)
@@ -33,12 +32,13 @@ export const POST = async(req: Request) => {
 
     return NextResponse.json({
       status: 201,
-      message: "User created successfully"
+      message: "Usuario criado com sucesso"
     })
-  } catch (error) {
-    NextResponse.json({
-      status: 500,
-      message: "Internal server error"
+  } catch (error: any) {
+    return NextResponse.json({
+      status: error.status || 500,
+      message: error.message,
+      type: error.type || "server"
     })
   }
 }

@@ -4,10 +4,17 @@ import { StarsRating } from "../StarsRating"
 
 export interface CommentsProps {
   bookId: string,
-  userComments?: CommentInterface[]
 }
 
-export const Comments = ({ bookId, userComments}: CommentsProps) => {
+interface CommentsRequest{
+  getCommentsByBookId: CommentInterface[]
+}
+
+
+export const Comments = async({ bookId }: CommentsProps) => {
+  const request = await fetch(`http://localhost:3000/api/books/${bookId}/comments`)
+  const { getCommentsByBookId: userComments }: CommentsRequest = await request.json()
+
   return (
     <div>
       <h2 className="font-medium text-xl">Comentarios</h2>

@@ -9,6 +9,7 @@ import { BookInterface } from "@/models/Book"
 import { StarsRating } from "@/components/StarsRating"
 import { imageToBase64 } from "@/utils/convertToBase64"
 import { toast } from "react-toastify"
+import axios from "axios"
 
 export default function Share(){
   const { register, handleSubmit, reset} = useForm<BookInterface>() 
@@ -27,22 +28,20 @@ export default function Share(){
       })
   }
 
+
   const onSubmit = async(data: BookInterface) => {  
     try {
-      const response = await fetch("/api/books/newbook",{
-        method: "POST",
-        body: JSON.stringify({
-          title: data.title,
-          description: data.description,
-          price: data.price,
-          author: data.author,
-          number_pages: data.number_pages,
-          categorie: data.categorie,
-          image: image64,
-          createdby: session?.user?.id,
-          creator_rating: insertRating
+      await axios.post("/api/books/newbook",{
+        title: data.title,
+        description: data.description,
+        price: data.price,
+        author: data.author,
+        number_pages: data.number_pages,
+        categorie: data.categorie,
+        image: image64,
+        createdby: session?.user?.id,
+        creator_rating: insertRating
         })
-      })
 
       toast.success("Livro publicado com sucesso")
       router.push("/")
@@ -55,26 +54,25 @@ export default function Share(){
     }
   } 
 
-
   return(
     <section className="w-full flex items-center justify-center">
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col lg:flex-row justify-evenly w-full p-4 mt-16">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col lg:flex-row justify-evenly w-full p-4 mt-16 ">
       
-      {/* Form select image */}
-      <div className="p-2 flex flex-col justify-center gap-2">
+        {/* Form select image */}
+        <div className="p-2 flex flex-col justify-center gap-2">
           {image64 && (
             <Image 
               src={image64} 
               width={350} 
               height={350} 
               alt="Imagem do livro selecionado"
+              className="object-cover max-h-[500px]"
             />
           )}
 
           <label className="font-medium" htmlFor="userImage">
             Selecione a imagem do Livro
           </label>
-
           <input
             className="file:rounded-xl file:py-2 file:bg-emerald-500 file:text-white file:font-bold file:px-4 file:transition file:border-none file:hover:bg-emerald-600"
             required
@@ -83,7 +81,7 @@ export default function Share(){
             accept="image/*"
             id="userImage"
           />
-      </div>
+        </div>
 
         {/* Form informations */}
         <div className="flex flex-col lg:w-1/3 mt-20 lg-mt-0">       
@@ -114,6 +112,7 @@ export default function Share(){
             placeholder="Descrição do livro"
             id="description"
             {...register("description")}
+            maxLength={939}
           />
 
           <label className="label-form" htmlFor="author">Autor</label>
@@ -132,6 +131,7 @@ export default function Share(){
             type="Number"
             placeholder="Número de páginas"
             id="number_pages"
+            min={1}
             {...register("number_pages")}
           />
 
@@ -142,6 +142,7 @@ export default function Share(){
             type="Number"
             placeholder="Valor do livro"
             id="price"
+            min={1}
             {...register("price")}
           />
 

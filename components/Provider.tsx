@@ -5,6 +5,7 @@ import { ReactNode } from "react"
 
 interface Session{
   children: ReactNode,
+  session?: any
 }
 
 export const Provider = ({ children, session }: Session) => {

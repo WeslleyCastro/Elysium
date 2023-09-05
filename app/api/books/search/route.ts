@@ -1,9 +1,9 @@
 import { Book } from "@/models/Book"
 import { connectToDB } from "@/utils/database"
-import { NextApiRequest } from "next"
+import { NextRequest } from "next/server"
 
-export const GET = async(req: NextApiRequest ) => {
-  const filter: string = req.nextUrl.searchParams.get("q")
+export const GET = async(req: NextRequest ) => {
+  const filter: string | null = req.nextUrl.searchParams.get("q")
 
   try {
     connectToDB()

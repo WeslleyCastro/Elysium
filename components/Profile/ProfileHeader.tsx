@@ -1,7 +1,5 @@
-"use client"
-
-import { useSession } from "next-auth/react"
 import { EditModal } from "./EditModal"
+import { getSessionUser } from "@/lib/session"
 
 interface ProfileHeaderProps {
   userName: string
@@ -10,9 +8,8 @@ interface ProfileHeaderProps {
   _id: string
 }
 
-export const ProfileHeader = ({userName, userImage, userDescription, _id}: ProfileHeaderProps ) => {
-  const {data: session} = useSession()
-
+export const ProfileHeader = async({userName, userImage, userDescription, _id}: ProfileHeaderProps ) => {
+  const session = await getSessionUser()
   let description = userDescription ? userDescription : "Sem descrição"
   
   return(
@@ -27,7 +24,7 @@ export const ProfileHeader = ({userName, userImage, userDescription, _id}: Profi
           {userName}
         </h1>
         <p className="italic text-gray-400 relative gap-2 sm:max-w-[500px]">
-          {description} {session?.user.id === _id ? <EditModal userId={_id}/> : ""}
+          {description} {session?.id === _id ? <EditModal userId={_id}/> : ""}
         </p>
       </div>
     </div>

@@ -2,12 +2,6 @@ import User from "@/models/User"
 import { connectToDB } from "@/utils/database"
 import { NextRequest } from "next/server"
 
-interface requestParams{
-  params: {
-    name: string
-  }
-}
-
 export async function GET(req: NextRequest){
 
   const userId = req.nextUrl.searchParams.get("id")

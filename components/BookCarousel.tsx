@@ -37,7 +37,7 @@ export const BookCarrousel = ({ books }: BookCarrouselProps) => {
         slidesPerView={1}
       >
         {books && books.map((book: BookCardProps) => (
-          <SwiperSlide key={book._id} className="pl-28 sm:pl-20 ">
+          <SwiperSlide key={book._id} className="pl-24 sm:pl-20">
               <BookCard
                 image={book.image}
                 title={book.title}

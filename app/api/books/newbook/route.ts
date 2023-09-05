@@ -1,6 +1,5 @@
 import { Book } from "@/models/Book";
 import { connectToDB } from "@/utils/database";
-import { revalidatePath } from "next/cache";
 
 export const POST = async(req: Request) => {
   const rating = 0
@@ -25,7 +24,7 @@ export const POST = async(req: Request) => {
       createdby,
       description, 
       image,
-      number_pages, 
+      number_pages,
       price, 
       title,
       author, 

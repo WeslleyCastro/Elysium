@@ -1,6 +1,6 @@
 export default function Loading() {
   return(
-    <section className="p-4 animate-pulse">
+    <section className="p-4 animate-pulse h-full">
       <div className="flex flex-col sm:flex-row my-8 gap-6">
         <div className="flex flex-col gap-2 min-w-[250px]">
           <div className="max-w-[250px] min-h-[360px] skeleton-color"/>
@@ -19,13 +19,6 @@ export default function Loading() {
             </div>
         </div>
       </div>
-     
-      <section className="sm:mt-28">
-        <div className="mb-4 h-4 w-32 skeleton-color rounded-sm"/>
-
-        <div className="h-20 w-72 skeleton-color rounded-md"/>
-      </section>
-      
     </section>
   )
 }
