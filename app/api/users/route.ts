@@ -6,6 +6,7 @@ export async function GET(req: NextRequest){
 
   const userId = req.nextUrl.searchParams.get("id")
 
+  console.log(userId)
   try {
     connectToDB()
 

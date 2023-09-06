@@ -29,7 +29,9 @@ export const CommentTextArea = ({ bookId }: CommentsProps) => {
           commentRating: insertRating,
         })
       })
+      toast.success("Comentario enviado")
     } catch (error) {
+      toast.error("Erro ao enviar comentario")
       console.log(error)
     }finally{
       reset()

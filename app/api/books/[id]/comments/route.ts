@@ -40,12 +40,12 @@ export const POST = async(req: NextRequest, params: Params) => {
   const { comment, createdBy, commentRating} = await req.json()
   const getParams = params.params.id   // Book id
 
-
-  const getCommentsData = await fetch(`http://localhost:3000/api/books/${getParams}/comments`)
+  const urlComments = `${process.env.BASEURL}/api/books/${getParams}/comments`
+  const getCommentsData = await fetch(urlComments)
   const { getCommentsByBookId: getComments }: CommentsData = await getCommentsData.json()
   
-  
-  const getBookData = await fetch(`http://localhost:3000/api/books/${getParams}`)
+  const urlBook = `${process.env.BASEURL}/api/books/${getParams}`
+  const getBookData = await fetch(urlBook)
   const { getBookByid }: BookData = await getBookData.json()
   
   //Sum all comments rating in database
@@ -53,12 +53,14 @@ export const POST = async(req: NextRequest, params: Params) => {
 
 
   //If there is no comments in database, then the total rating will be the average of the creator rating and the comment rating by user
+  //If there is comments in database, then the total rating will be the average of the creator rating, the comment rating by user and the comments rating in database
+
   let totalRating
 
   if(commentRatingCount == 0){
     totalRating = (getBookByid.creator_rating + commentRating) / 2
   }else{
-    totalRating = (commentRatingCount + commentRating) / (getComments.length + 2)
+    totalRating = (commentRatingCount + commentRating + getBookByid.creator_rating ) / (getComments.length + 2)
   }
 
   if(totalRating > 5){

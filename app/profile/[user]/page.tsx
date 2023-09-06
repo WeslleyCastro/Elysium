@@ -11,9 +11,12 @@ interface ProfileProps {
 
 export default async function Profile({searchParams}: ProfileProps){
 
+  const urlUsers = `${process.env.BASEURL}/api/users?id=${searchParams.id}`
+  const urlCreator = `${process.env.BASEURL}/api/books/search/bycreator/${searchParams.id}`
+
   const [userDataResponse, userBooksDataResponse] = await Promise.all([
-    fetch(`http://localhost:3000/api/users?id=${searchParams.id}`, { cache: "no-store"}),
-    fetch(`http://localhost:3000/api/books/search/bycreator/${searchParams.id}`, {cache: "no-store"})
+    fetch(urlUsers, { cache: "no-store"}),
+    fetch(urlCreator, {cache: "no-store"})
   ])
   
   const user: IUser = await userDataResponse.json()
@@ -31,7 +34,7 @@ export default async function Profile({searchParams}: ProfileProps){
       <section className="mt-36">
         {userBooks.length > 0 ? (
           <>
-            <span className="pl-20 text-xl font-semibold">Livros compartilhados</span>
+            <h2 className="pl-20 text-xl font-semibold">Livros compartilhados <span className="text-sm italic text-zinc-500">[{userBooks.length}]</span></h2>
             <BookCarrousel books={userBooks}/>
           </>
         ):(

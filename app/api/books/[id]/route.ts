@@ -34,7 +34,8 @@ export async function GET(req: Request, { params }: Params) {
 export async function POST(req: Request, {params}: Params) {
   const { comment, createdBy, commentRating} = await req.json()
 
-  const response = await fetch(`http://localhost:3000/api/books/${params.id}`)
+  const url = `${process.env.BASEURL}/api/books/${params.id}}`
+  const response = await fetch(url)
   const { getBookByid, getCommentsByBookId } = await response.json()
  
   const commentRatingCount = getCommentsByBookId.reduce((acc: number, comment: CommentInterface) => acc + comment.commentRating, 0)

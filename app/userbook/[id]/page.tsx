@@ -8,6 +8,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 import { RiFilePaper2Fill } from "react-icons/ri"
+import { AiFillStar } from "react-icons/ai"
 
 interface UserBookProps {
   params: {
@@ -21,7 +22,9 @@ interface BookRequest {
 }
 
 export default async function UserBook({params}: UserBookProps){
-  const res = await fetch(`http://localhost:3000/api/books/${params.id}`, {cache: "no-store"})
+  const url = `${process.env.BASEURL}/api/books/${params.id}`
+
+  const res = await fetch(url, {cache: "no-store"})
   const {getBookByid: book, status }: BookRequest = await res.json()   
   
   if(status === 404) notFound()
@@ -30,6 +33,8 @@ export default async function UserBook({params}: UserBookProps){
 
   return(
     <section className="p-4">
+       
+       {/* Book information */}
       <div className="flex flex-col sm:flex-row my-8 gap-6">
          <div className="flex flex-col min-w-[250px]">
           <Image
@@ -52,13 +57,19 @@ export default async function UserBook({params}: UserBookProps){
               </span>
               <p className="text-justify mt-4 indent-8">{book.description}</p>
           </div>
-            
-          <div className="mt-8">
-            <hr/>
-            <div className="mt-3 flex flex-col items-center w-32 gap-2">
-              <span className="text-xs">N de paginas</span>
-              <RiFilePaper2Fill size={22}/>
+          
+          {/* Additional information */}
+          <div className="max-md:mt-6 border-t flex gap-4">
+            <div className="mt-3 flex flex-col items-center py-1 px-3 rounded-lg shadow gap-1 border-t">
+              <span className="text-xs">Paginas</span>
+              <span className="text-emerald-500"><RiFilePaper2Fill size={22}/></span>
               <span className="text-sm">{book.number_pages}</span>
+            </div>
+
+            <div className="mt-3 flex flex-col items-center py-1 px-3 rounded-lg shadow gap-1 border-t">
+              <span className="text-xs">Criador</span>
+              <span className="text-emerald-500"><AiFillStar size={22}/></span>
+              <span className="text-sm">{book.creator_rating}</span>
             </div>
           </div>
         </div>

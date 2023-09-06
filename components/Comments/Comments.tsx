@@ -12,7 +12,8 @@ interface CommentsRequest{
 
 
 export const Comments = async({ bookId }: CommentsProps) => {
-  const request = await fetch(`http://localhost:3000/api/books/${bookId}/comments`)
+  const url = `${process.env.BASEURL}/api/books/${bookId}/comments`
+  const request = await fetch(url)
   const { getCommentsByBookId: userComments }: CommentsRequest = await request.json()
 
   return (
