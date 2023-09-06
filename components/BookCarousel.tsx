@@ -26,10 +26,6 @@ export const BookCarrousel = ({ books }: BookCarrouselProps) => {
   return(
     <>
       <Swiper
-        style={{
-          '--swiper-navigation-color': '#111',
-          '--swiper-pagination-color': '#111',
-        }}
         spaceBetween={5}
         modules={[Navigation]}
         navigation
