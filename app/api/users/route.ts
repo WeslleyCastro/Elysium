@@ -1,4 +1,4 @@
-import User from "@/models/User"
+import UserModel from "@/models/User"
 import { connectToDB } from "@/utils/database"
 import { NextRequest } from "next/server"
 
@@ -10,7 +10,7 @@ export async function GET(req: NextRequest){
   try {
     connectToDB()
 
-    const getUser = await User.findById(userId)
+    const getUser = await UserModel.findById(userId)
 
     if(!getUser) return new Response("no user found", { 
       status: 404 
@@ -34,7 +34,7 @@ export const PATCH = async(req: NextRequest) => {
   try {
     connectToDB()
 
-    const getUser = await User.findOneAndUpdate({_id: userId}, {description: updatedDescription}, { new: true })
+    const getUser = await UserModel.findOneAndUpdate({_id: userId}, {description: updatedDescription}, { new: true })
 
     if(!getUser) return new Response("no user found", { 
       status: 404 

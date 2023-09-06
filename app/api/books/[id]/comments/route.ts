@@ -9,13 +9,7 @@ interface Params {
   }
 }
 
-interface CommentsData {
-  getCommentsByBookId: CommentInterface[]
-}
 
-interface BookData {
-  getBookByid: BookInterface
-}
 
 export const GET = async(req: NextRequest, params: Params) => {
   const getParams = params.params.id
@@ -29,7 +23,7 @@ export const GET = async(req: NextRequest, params: Params) => {
       return NextResponse.json({message: "Failed to find comments", status: 404})
     }
 
-    return NextResponse.json({getCommentsByBookId, status: 200})
+    return NextResponse.json(getCommentsByBookId)
   } catch (error) {
     return NextResponse.json({message: "Failed to find comments", status: 500})
   }
@@ -42,11 +36,11 @@ export const POST = async(req: NextRequest, params: Params) => {
 
   const urlComments = `${process.env.BASEURL}/api/books/${getParams}/comments`
   const getCommentsData = await fetch(urlComments)
-  const { getCommentsByBookId: getComments }: CommentsData = await getCommentsData.json()
+  const getComments: CommentInterface[] = await getCommentsData.json()
   
   const urlBook = `${process.env.BASEURL}/api/books/${getParams}`
   const getBookData = await fetch(urlBook)
-  const { getBookByid }: BookData = await getBookData.json()
+  const getBookByid: BookInterface = await getBookData.json()
   
   //Sum all comments rating in database
   const commentRatingCount = getComments.reduce((acc: number, comment: CommentInterface) => acc + comment.commentRating, 0)

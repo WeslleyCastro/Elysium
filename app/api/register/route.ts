@@ -1,4 +1,4 @@
-import User from "@/models/User";
+import UserModel from "@/models/User";
 import { connectToDB } from "@/utils/database";
 import { NextResponse } from "next/server";
 import { ProfileImageBase64 } from "@/public/images/ProfileImageBase64";
@@ -12,7 +12,7 @@ export const POST = async(req: Request, res: NextResponse) => {
   try {
     await connectToDB()
 
-    const userExist = await User.findOne({ email: email })
+    const userExist = await UserModel.findOne({ email: email })
     
     
     if(userExist) {
@@ -21,7 +21,7 @@ export const POST = async(req: Request, res: NextResponse) => {
 
     const hashPassword = await bcrypt.hash(password, 10)
 
-    const newUser = new User({
+    const newUser = new UserModel({
       email,
       username,
       password: hashPassword,

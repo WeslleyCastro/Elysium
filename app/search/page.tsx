@@ -10,14 +10,17 @@ interface SearchProps{
 
 export default async function SearchPage({searchParams}: SearchProps){
   const url = `${process.env.BASEURL}/api/books`
-  let data
+  
+  let data: BookCardProps[]
 
   if(searchParams.q == "all"){
-    const response = await fetch(url)  
-    data = await response.json()
+    data = await fetch(url)
+    .then(res => res.json())  
+    .catch(error => console.log(error))
   }else {
-    const response = await fetch(`${url}/search?q=${searchParams.q}`, {cache: "no-store"})  
-    data = await response.json()
+    data = await fetch(`${url}/search?q=${searchParams.q}`, {cache: "no-store"})
+    .then(res => res.json())  
+    .catch(error => console.log(error))
   }
 
 

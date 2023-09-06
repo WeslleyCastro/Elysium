@@ -10,7 +10,6 @@ interface ProfileProps {
 }
 
 export default async function Profile({searchParams}: ProfileProps){
-
   const urlUsers = `${process.env.BASEURL}/api/users?id=${searchParams.id}`
   const urlCreator = `${process.env.BASEURL}/api/books/search/bycreator/${searchParams.id}`
 

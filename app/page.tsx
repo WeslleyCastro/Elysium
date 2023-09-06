@@ -7,8 +7,9 @@ import Image from "next/image";
 
 export default async function Home() {
   const url = `${process.env.BASEURL}/api/books`
-  const response = await fetch(url, {cache: 'no-store'})
-  const data: BookCardProps[] = await response.json()
+  const data: BookCardProps[] = await fetch(url, {cache: 'no-store'})
+  .then((response) => response.json())
+  .catch((error) => console.log(error))
   const session = await getSessionUser()
 
   return (

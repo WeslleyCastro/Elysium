@@ -24,7 +24,7 @@ export async function GET(req: Request, { params }: Params) {
       return NextResponse.json("Book not found", {status: 404})
     }
     
-    return NextResponse.json({getBookByid, status: 200})
+    return NextResponse.json(getBookByid)
   } catch (error) {
     console.log(error)
     return new Response("Failed to find book", {status: 505})

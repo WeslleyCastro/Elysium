@@ -8,12 +8,9 @@ export async function GET(req: Request, res: Response) {
 
     const getBooks = await Book.find({})
 
-    if(!getBooks)return new Response("failed to fetch all books", {
-      status: 404
-    })
+    if(!getBooks) return NextResponse.json({ message: "No books found" }, { status: 404 })
 
     return NextResponse.json(getBooks)
-    
   } catch (error) {
     return new Response("failed to fetch all books", {
       status: 500
