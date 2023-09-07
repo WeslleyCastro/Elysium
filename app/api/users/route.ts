@@ -1,12 +1,11 @@
-import UserModel from "@/models/User"
+import { UserModel } from "@/models/User"
 import { connectToDB } from "@/utils/database"
-import { NextRequest } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 
 export async function GET(req: NextRequest){
 
   const userId = req.nextUrl.searchParams.get("id")
 
-  console.log(userId)
   try {
     connectToDB()
 
@@ -16,9 +15,7 @@ export async function GET(req: NextRequest){
       status: 404 
     })
 
-    return new Response(JSON.stringify(getUser), {
-      status: 200
-    })
+   return NextResponse.json(getUser)
   } catch (error) {
     return new Response(JSON.stringify("failed to get user"), {
       status: 500

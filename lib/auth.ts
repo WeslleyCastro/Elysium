@@ -1,4 +1,4 @@
-import Users from "@/models/User";
+import { UserModel } from "@/models/User";
 import { connectToDB } from "@/utils/database";
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
@@ -22,7 +22,7 @@ export const authOptions = {
         try {
           await connectToDB()
           
-          const user = await Users.findOne({ email })
+          const user = await UserModel.findOne({ email })
         
           if (!user){
             return {error: "user404"}
@@ -56,12 +56,12 @@ export const authOptions = {
       try {
         await connectToDB()
 
-        const userExists = await Users.findOne({
+        const userExists = await UserModel.findOne({
           email: user?.email
         })
 
         if(!userExists){
-          await Users.create({
+          await UserModel.create({
             email: user?.email,
             username: user?.name,
             image: user?.image
@@ -76,7 +76,7 @@ export const authOptions = {
     },
 
     async session({ session }: {session: Session}){
-      const sessionUser = await Users.findOne({
+      const sessionUser = await UserModel.findOne({
         email: session?.user?.email
       })
       session.user.id = sessionUser?._id.toString()

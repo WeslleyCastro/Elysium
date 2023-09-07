@@ -10,7 +10,6 @@ interface Params {
 }
 
 
-
 export const GET = async(req: NextRequest, params: Params) => {
   const getParams = params.params.id
 
