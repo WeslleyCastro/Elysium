@@ -1,7 +1,7 @@
 import { ProfileHeader } from "@/components/Profile/ProfileHeader"
 import { BookCardProps } from "@/@types/bookCardProps"
 import { BookCarrousel } from "@/components/BookCarousel"
-import { IUser } from "@/models/User"
+import { IUser } from "@/models/Users"
 
 interface ProfileProps {
   searchParams: {

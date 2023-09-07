@@ -1,5 +1,5 @@
 import { Schema, model, models } from "mongoose";
-import { IUser } from "@/models/User"
+import { IUser } from "@/models/Users"
 
 
 export interface BookInterface {

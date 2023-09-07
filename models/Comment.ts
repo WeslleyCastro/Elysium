@@ -1,5 +1,5 @@
 import { Schema, model, models } from "mongoose";
-import { IUser } from "./User";
+import { IUser } from "./Users";
 
 export interface CommentInterface {
   _id?: string;

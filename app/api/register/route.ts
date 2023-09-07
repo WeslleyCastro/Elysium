@@ -1,4 +1,4 @@
-import { UserModel } from "@/models/User";
+import { UserModel } from "@/models/Users";
 import { connectToDB } from "@/utils/database";
 import { NextResponse } from "next/server";
 import { ProfileImageBase64 } from "@/public/images/ProfileImageBase64";
