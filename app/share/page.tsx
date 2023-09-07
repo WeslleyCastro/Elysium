@@ -28,7 +28,6 @@ export default function Share(){
       })
   }
 
-
   const onSubmit = async(data: BookInterface) => {  
     try {
       await axios.post("/api/books/newbook",{
@@ -41,7 +40,7 @@ export default function Share(){
         image: image64,
         createdby: session?.user?.id,
         creator_rating: insertRating
-        })
+      })
 
       toast.success("Livro publicado com sucesso")
       router.push("/")

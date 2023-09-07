@@ -19,7 +19,6 @@ const UserSchema = new Schema<IUser>({
   },
   username: {
     type: String,
-    match: [/^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/, "Usuario invalido, deve conter 8-20 caracteres"]
   },
   password: {
     type: String,
@@ -32,6 +31,6 @@ const UserSchema = new Schema<IUser>({
   },
 }) 
 
-const UserModel = models.User || model("User", UserSchema)
+const UserModel = models.users || model("users", UserSchema)
 
-export { UserModel }
+export { UserModel }  

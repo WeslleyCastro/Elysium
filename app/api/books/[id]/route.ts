@@ -1,4 +1,4 @@
-import { Book} from "@/models/Book"
+import { Book } from "@/models/Book"
 import { connectToDB } from "@/utils/database"
 import { NextResponse } from "next/server"
 

@@ -21,7 +21,7 @@ const CommentSchema = new Schema({
   },
   creator: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'users'
   },
   createdAt: {
     type: Date,

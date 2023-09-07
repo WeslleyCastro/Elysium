@@ -63,7 +63,7 @@ export default async function UserBook({params}: UserBookProps){
             <div className="mt-3 flex flex-col items-center py-1 px-3 rounded-lg shadow gap-1 border-t">
               <span className="text-xs">Paginas</span>
               <span className="text-emerald-500"><RiFilePaper2Fill size={22}/></span>
-              <span className="text-sm">{book.number_pages}</span>
+              <span className="text-sm">{book.number_pages != null ? book.number_pages : ""}</span>
             </div>
 
             <div className="mt-3 flex flex-col items-center py-1 px-3 rounded-lg shadow gap-1 border-t">

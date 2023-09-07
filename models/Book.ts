@@ -19,7 +19,7 @@ export interface BookInterface {
 const BookSchema = new Schema<BookInterface>({
   creator: {
     type: Schema.Types.ObjectId,
-    ref: "User"
+    ref: "users"
   },
   title: {
     type: String,
