@@ -31,7 +31,7 @@ export default function SignUpPage() {
       })
       toast.success("Registrado com sucesso")
       reset()
-      router.push("/login")
+      router.push("/signin")
     } catch (error: any) {
       setError({
         error: error.response.data.error,
