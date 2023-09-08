@@ -2,10 +2,12 @@ import mongoose from "mongoose"
 
 let isConnect = false
 
+const url = process.env.MONGODB_URI || process.env.URI_MONGODB
+
 export const connectToDB = async() => {
   mongoose.set("strictQuery", true)
   
-  let URI = process.env.URI_MONGODB ?? ""
+  let URI = url ?? ""
   let config ={
     dbName: "elysium",
     useUnifiedTopology: true,
