@@ -2,6 +2,8 @@ import { connectToDB } from "@/utils/database";
 import { Book } from "@/models/Book";
 import { NextResponse } from "next/server";
 
+export const fetchCache = 'force-no-store'
+
 export async function GET() {
   try {
     await connectToDB()

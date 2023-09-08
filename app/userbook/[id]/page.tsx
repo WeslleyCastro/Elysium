@@ -32,7 +32,7 @@ export default async function UserBook({params}: UserBookProps){
   const verifyRating = book.rating !== 0 ? book.rating : book.creator_rating
 
   return(
-    <section className="p-4">
+    <section className="p-4 h-full">
        
        {/* Book information */}
       <div className="flex flex-col sm:flex-row my-8 gap-6">
