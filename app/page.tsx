@@ -1,17 +1,11 @@
-import { BookCarrousel } from "@/components/BookCarousel";
-import { BookCardProps } from "@/@types/bookCardProps";
 import { AiOutlineLink } from "react-icons/ai";
-import { getSessionUser } from "@/lib/session";
 import Link from "next/link";
-import Image from "next/image";
+import { BooksHome } from "@/components/BooksHome";
+import { Suspense } from "react";
+import { CarouselSkeleton } from "@/components/CarouselSkeleton";
+import { BannerShareBook } from "@/components/BannerShareBook";
 
-export default async function Home() {
-  const url = `${process.env.BASEURL}/api/books`
-  const data: BookCardProps[] = await fetch(url, {cache: 'no-store'})
-  .then((response) => response.json())
-  .catch((error) => console.log(error))
-  const session = await getSessionUser()
-
+export default function Home() {
   return (
     <main>
       <section className="flex bg-gradient-to-r from-emerald-500 to-emerald-800 text-center items-center justify-center lg:justify-evenly py-8 ">
@@ -28,39 +22,12 @@ export default async function Home() {
           Ver todos livros <AiOutlineLink size={25}/>
         </Link>
         
-        <BookCarrousel books={data}/>
+        <Suspense fallback={<div className="overflow-hidden pt-4 flex gap-16 ml-20"><CarouselSkeleton quantity={5}/></div>}>
+          <BooksHome/>
+        </Suspense>
       </section>
 
-      <section className="px-2 flex items-center justify-center mt-40">
-        <div className="flex shadow rounded-md items-center justify-center">
-          <Image
-            src="images/upload.svg"
-            alt="compartilhe"
-            width={400}
-            height={300}
-            className="max-md:hidden"
-          />
-          <div className="px-4 py-20 text-center md:pr-8" >
-            <p className="text-2xl font-semibold mb-12">
-              Terminou de ler o livro? <br/> Compartilhe com todos o que achou
-            </p>
-          
-            {session ? (
-              <Link
-                href="/share"
-                className="bg-emerald-300 transition text-white font-bold py-3 px-6 rounded-md hover:bg-emerald-500 ">
-                Compartilhar
-              </Link>
-            ):(
-              <Link
-                href="/signin"
-                className="bg-emerald-300 transition text-white font-bold py-3 px-6 rounded-md hover:bg-emerald-500 ">
-                Faça login
-              </Link>
-            )}
-          </div>
-        </div>
-      </section>
+      <BannerShareBook/>
     </main>
   ) 
 }

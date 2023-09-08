@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request, res: Response) {
   try {
-    connectToDB()
+    await connectToDB()
 
     const getBooks = await Book.find({})
 

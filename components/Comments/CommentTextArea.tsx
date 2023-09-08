@@ -21,7 +21,7 @@ export const CommentTextArea = ({ bookId }: CommentsProps) => {
     if(insertRating == 0) return toast.error("Você precisa avaliar o livro")
     
     try {
-      const response = await fetch(`../api/books/${bookId}/comments`, {
+      const response = await fetch(`/api/books/${bookId}/comments`, {
         method: "POST",
         body: JSON.stringify({
           createdBy: session?.user?.id,
