@@ -9,6 +9,9 @@ interface Params {
   }
 }
 
+interface GetBookData {
+  getBookByid: BookInterface
+}
 
 export const GET = async(req: NextRequest, params: Params) => {
   const getParams = params.params.id
@@ -39,7 +42,8 @@ export const POST = async(req: NextRequest, params: Params) => {
   
   const urlBook = `${process.env.BASEURL}/api/books/${getParams}`
   const getBookData = await fetch(urlBook)
-  const getBookByid: BookInterface = await getBookData.json()
+  const { getBookByid }: GetBookData = await getBookData.json()
+  
   
   //Sum all comments rating in database
   const commentRatingCount = getComments.reduce((acc: number, comment: CommentInterface) => acc + comment.commentRating, 0)
@@ -50,6 +54,7 @@ export const POST = async(req: NextRequest, params: Params) => {
 
   let totalRating
 
+  console.log(getBookByid.creator_rating, commentRating)
   if(commentRatingCount == 0){
     totalRating = (getBookByid.creator_rating + commentRating) / 2
   }else{

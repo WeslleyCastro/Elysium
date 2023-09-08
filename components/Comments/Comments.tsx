@@ -6,15 +6,12 @@ export interface CommentsProps {
   bookId: string,
 }
 
-interface CommentsRequest{
-  getCommentsByBookId: CommentInterface[]
-}
 
 
 export const Comments = async({ bookId }: CommentsProps) => {
   const url = `${process.env.BASEURL}/api/books/${bookId}/comments`
   const request = await fetch(url)
-  const { getCommentsByBookId: userComments }: CommentsRequest = await request.json()
+  const userComments: CommentInterface[] = await request.json()
 
   return (
     <div>
