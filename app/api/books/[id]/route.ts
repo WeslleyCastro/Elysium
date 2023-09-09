@@ -1,6 +1,6 @@
 import { Book } from "@/models/Book"
 import { connectToDB } from "@/utils/database"
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 
 interface Params {
   params: {
@@ -8,7 +8,7 @@ interface Params {
   }
 }
 
-export async function GET({ params }: Params) {
+export async function GET(req: NextRequest, { params }: Params) {
   try {
     connectToDB()
 
