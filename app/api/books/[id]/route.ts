@@ -8,8 +8,7 @@ interface Params {
   }
 }
 
-export async function GET(req: Request, { params }: Params) {
-
+export async function GET({ params }: Params) {
   try {
     connectToDB()
 

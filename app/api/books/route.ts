@@ -2,7 +2,7 @@ import { connectToDB } from "@/utils/database";
 import { Book } from "@/models/Book";
 import { NextResponse } from "next/server";
 
-export const fetchCache = 'force-no-store'
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {

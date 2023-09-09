@@ -11,7 +11,7 @@ export default function error({
 }){
   return(
     <section className="flex items-center justify-center h-full flex-col">
-      <Image src="images/errorcomputer.svg" height={400} width={400} alt="computador com erro"/>
+      <Image src="/images/errorcomputer.svg" height={400} width={400} alt="computador com erro"/>
 
       <h1 className="text-xl font-semibold mb-4">Ocorreu um erro</h1>
       <span>
