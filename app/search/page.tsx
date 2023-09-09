@@ -14,7 +14,7 @@ export default async function SearchPage({searchParams}: SearchProps){
   let data: BookCardProps[]
 
   if(searchParams.q == "all"){
-    data = await fetch(url)
+    data = await fetch(url, {cache: "no-store"})
     .then(res => res.json())  
     .catch(error => console.log(error))
   }else {
