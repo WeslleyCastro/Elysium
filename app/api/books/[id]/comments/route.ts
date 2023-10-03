@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import Comments, { CommentInterface } from "@/models/Comment";
 import { Book, BookInterface } from "@/models/Book";
 
+export const dynamic = 'force-dynamic';
+
 interface Params {
   params: {
     id: string
@@ -19,7 +21,7 @@ export const GET = async(req: NextRequest, params: Params) => {
   try {
     await connectToDB()
 
-    const getCommentsByBookId: CommentInterface[] = await Comments.find({commentForBook: getParams}).populate("creator")
+    const getCommentsByBookId: CommentInterface[] = await Comments.find({commentForBook: getParams}).sort({createdAt: -1}).populate("creator")
 
     if(!getCommentsByBookId){
       return NextResponse.json({message: "Failed to find comments", status: 404})
@@ -54,7 +56,6 @@ export const POST = async(req: NextRequest, params: Params) => {
 
   let totalRating
 
-  console.log(getBookByid.creator_rating, commentRating)
   if(commentRatingCount == 0){
     totalRating = (getBookByid.creator_rating + commentRating) / 2
   }else{
@@ -78,9 +79,9 @@ export const POST = async(req: NextRequest, params: Params) => {
       commentRating
     })
 
-    await Book.findByIdAndUpdate(getParams, {rating: totalRating.toFixed(1)})
+    await Book.findByIdAndUpdate(getParams, {rating: totalRating.toFixed(1), new: true})
     await newComment.save()
-
+    
     return NextResponse.json({message: "Comentario enviado!", status: 200})
   } catch (error) {
     console.log(error)

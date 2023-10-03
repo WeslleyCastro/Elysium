@@ -1,12 +1,10 @@
 import { Comments } from "@/components/Comments/Comments"
-import { CommentsSkeleton } from "@/components/Comments/CommentsSkeleton"
 import { StarsRating } from "@/components/StarsRating"
 import { BookInterface } from "@/models/Book"
 import { formatCurrency } from "@/utils/formatCurrency"
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { Suspense } from "react"
 import { RiFilePaper2Fill } from "react-icons/ri"
 import { AiFillStar } from "react-icons/ai"
 
@@ -32,7 +30,7 @@ export default async function UserBook({params}: UserBookProps){
   const verifyRating = book.rating !== 0 ? book.rating : book.creator_rating
 
   return(
-    <section className="p-4 h-full">
+    <section className="p-4">
        
        {/* Book information */}
       <div className="flex flex-col sm:flex-row my-8 gap-6">
@@ -76,9 +74,7 @@ export default async function UserBook({params}: UserBookProps){
       </div>
      
       <section className="sm:mt-28">
-        <Suspense fallback={<CommentsSkeleton/>}>
-          <Comments bookId={params.id}/>
-        </Suspense>
+        <Comments bookId={params.id}/>
       </section>
     </section>
   )

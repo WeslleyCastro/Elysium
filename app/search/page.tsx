@@ -17,12 +17,11 @@ export default async function SearchPage({searchParams}: SearchProps){
     data = await fetch(url, {cache: "no-store"})
     .then(res => res.json())  
     .catch(error => console.log(error))
-  }else {
+  } else {
     data = await fetch(`${url}/search?q=${searchParams.q}`, {cache: "no-store"})
     .then(res => res.json())  
     .catch(error => console.log(error))
   }
-
 
   return(
     <section className="min-h-screen p-4">

@@ -5,7 +5,7 @@ export interface CommentInterface {
   _id?: string;
   comment: string;
   creator: IUser;
-  createdAt: Date;
+  createdAt: string;
   commentRating: number
   commentForbook: Schema.Types.ObjectId | string;
 }

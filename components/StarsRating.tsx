@@ -21,13 +21,16 @@ export const StarsRating = ({ rating, insert, weigth, size}: StarsRatingProps) =
     <span className="flex items-center">
      {!insert ? array.map((index) => {
       return <Star key={index} size={size} weight={index <= rating! ? "fill" : "light"} color="#FBBF24"/>
-     }): 
+     }):(
      array.map((index) => {
       return (
-        <button key={index} type="button" onClick={() => onClickStar(index)}>
-          <Star weight={index <= weigth! ? "fill" : "light"} size={size}  color="#FBBF24"/>
-        </button>
-      )})}
+        <>
+          <button key={index} type="button" onClick={() => onClickStar(index)}>
+            <Star weight={index <= weigth! ? "fill" : "light"} size={size}  color="#FBBF24"/>
+          </button>
+          {index == 0 && <div><span>Avaliação obrigatória!</span></div>}
+        </>
+      )}))}
       <span className="text-xs ml-1">{rating}</span>
     </span>
   )

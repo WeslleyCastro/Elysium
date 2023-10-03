@@ -7,6 +7,7 @@ import { StarsRating } from "../StarsRating"
 import { useState } from "react"
 import { toast } from "react-toastify"
 import { CommentsProps } from "./Comments"
+import { useSWRConfig } from "swr"
  
 interface CommentForm {
   comment: string
@@ -14,12 +15,16 @@ interface CommentForm {
 
 export const CommentTextArea = ({ bookId }: CommentsProps) => {
   const [insertRating, setInsertRating] = useState(0)
+  const [withoutRating, setWithoutRating] = useState(false)
   const { register, handleSubmit, reset} = useForm<CommentForm>() 
+  const { mutate } = useSWRConfig()
   const {data: session} = useSession()
 
   const onSubmit = async(data: {comment: string} ) => {
-    if(insertRating == 0) return toast.error("Você precisa avaliar o livro")
-    
+    if(insertRating == 0) {
+      return setWithoutRating(true)
+    }
+    setWithoutRating(false)
     try {
       const response = await fetch(`/api/books/${bookId}/comments`, {
         method: "POST",
@@ -29,7 +34,7 @@ export const CommentTextArea = ({ bookId }: CommentsProps) => {
           commentRating: insertRating,
         })
       })
-      toast.success("Comentario enviado")
+      mutate(`/api/books/${bookId}/comments`)
     } catch (error) {
       toast.error("Erro ao enviar comentario")
       console.log(error)
@@ -49,12 +54,14 @@ export const CommentTextArea = ({ bookId }: CommentsProps) => {
             rows={4}
             required
             {...register("comment")}
+            maxLength={280}
           />
-          <button className="flex items-center justify-center gap-2 py-2 px-4 bg-emerald-300 text-sm text-white rounded-2xl   transition hover:scale-105">
+          <button className="flex items-center justify-center gap-2 py-2 px-4 bg-emerald-300 text-sm text-white rounded-2xl transition hover:scale-105">
             <PaperPlaneRight className="sm:block" size={20}/><span className="hidden sm:block">Comentar</span>
           </button>
         </div>
         <StarsRating size={20} insert={setInsertRating} weigth={insertRating}/>
+        {withoutRating && <span className="text-sm text-red-500">Avaliação obrigatória!</span>}
       </form> 
       ):( 
         <p className="text-sm">Faça login para comentar</p>
