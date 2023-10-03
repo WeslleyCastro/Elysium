@@ -42,7 +42,7 @@ export const authOptions = {
     })
   ],
   pages: {
-    signIn: "/signin"
+    signIn: "/authenticate"
   },
   callbacks: {
     async signIn({ user }: {user: User}){

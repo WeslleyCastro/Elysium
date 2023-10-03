@@ -5,8 +5,7 @@ import { ProfileImageBase64 } from "@/public/images/ProfileImageBase64";
 
 import bcrypt from "bcryptjs";
 
-
-export const POST = async(req: Request, res: NextResponse) => {
+export const POST = async(req: Request) => {
   const { email, username, password } = await req.json()
   
   try {

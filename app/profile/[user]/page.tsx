@@ -23,7 +23,7 @@ export default async function Profile({searchParams}: ProfileProps){
 
 
   return(
-    <section>
+    <section className="min-h-screen">
       <ProfileHeader
         _id={user._id}
         userName={user.username}

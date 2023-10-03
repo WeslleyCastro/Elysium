@@ -21,6 +21,7 @@ export const SearchBar = () => {
   return(
     <form onSubmit={handleSubmit(onSubmit)} className="flex items-center">
       <input
+        autoComplete="off"
         className="sm:w-96 rounded-xl p-2 outline-none border-2 text-black mr-2 focus:border-emerald-500 "
         type="text"
         placeholder="Procure por livros..."
