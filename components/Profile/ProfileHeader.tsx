@@ -14,7 +14,6 @@ export const ProfileHeader = ({userName, userImage, userDescription, _id}: Profi
   const {data: session} = useSession()
   let description = userDescription ? userDescription : "Sem descrição"
 
-  console.log(userImage)
   
   return(
     <div className="flex items-center gap-8 pl-8 pt-8 sm:pl-16">

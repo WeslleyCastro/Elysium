@@ -9,6 +9,7 @@ import { format, formatDistanceToNow, parseISO } from "date-fns"
 import ptBR from "date-fns/locale/pt-BR"
 import { DeleteModal } from "./DeleteModal"
 import { useWidth } from "@/hooks/useWidth"
+import { useSession } from "next-auth/react"
 
 export interface CommentsProps {
   bookId: string,
@@ -16,8 +17,8 @@ export interface CommentsProps {
 
 export const Comments = ({ bookId }: CommentsProps) => {
   const { data: userComments, isLoading } = getComments(bookId)
+  const {data: session} = useSession()
   const { width } = useWidth()
-  
 
   const publishedDateFormatted = (date: string) => {
     return format(parseISO(date), "dd/MM/yyyy", { locale: ptBR })
@@ -55,8 +56,8 @@ export const Comments = ({ bookId }: CommentsProps) => {
                     </time>
                   </span>
                 </div>
-              
-                <DeleteModal commentId={comments._id!} bookId={bookId}/>
+                
+                {session?.user.id == comments.creator._id && <DeleteModal commentId={comments._id!} bookId={bookId}/>}
               </div>
               <StarsRating rating={comments.commentRating} size={15}/>
               <p className="text-sm mt-4">{comments.comment}</p>
