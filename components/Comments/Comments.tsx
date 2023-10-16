@@ -4,17 +4,20 @@ import { CommentsSkeleton } from "./CommentsSkeleton"
 import { CommentInterface } from "@/models/Comment"
 import { CommentTextArea } from "./CommentTextArea"
 import { StarsRating } from "../StarsRating"
-import { getApi } from "@/services/swr"
+import { getComments } from "@/services/swr"
 import { format, formatDistanceToNow, parseISO } from "date-fns"
 import ptBR from "date-fns/locale/pt-BR"
+import { DeleteModal } from "./DeleteModal"
+import { useWidth } from "@/hooks/useWidth"
 
 export interface CommentsProps {
   bookId: string,
 }
 
 export const Comments = ({ bookId }: CommentsProps) => {
-  const url = `/api/books/${bookId}/comments`
-  const { data: userComments, isLoading } = getApi(url)
+  const { data: userComments, isLoading } = getComments(bookId)
+  const { width } = useWidth()
+  
 
   const publishedDateFormatted = (date: string) => {
     return format(parseISO(date), "dd/MM/yyyy", { locale: ptBR })
@@ -22,9 +25,10 @@ export const Comments = ({ bookId }: CommentsProps) => {
 
   const publishedDateRelativeToNow = (date: string) => {
     const formatDate = parseISO(date)
+    const isMobile = width < 640 ? false : true
     return formatDistanceToNow(formatDate, {
       locale: ptBR,
-      addSuffix: true
+      addSuffix: isMobile
     })
   }
 
@@ -41,15 +45,18 @@ export const Comments = ({ bookId }: CommentsProps) => {
               <div className="flex justify-between items-center mb-2">
                 <div className="flex items-center gap-2">
                   <img className="rounded-full" src={comments.creator.image} alt="imagem do usuario" width={30} height={30}/>
-                  <span className="text-base">{comments.creator.username}</span>
+                  <span className="text-base">
+                    {comments.creator.username}
+                    <time
+                      title={publishedDateFormatted(comments.createdAt)} 
+                      dateTime={comments.createdAt}
+                    >
+                      <span className="ml-2 text-xs text-gray-400">{publishedDateRelativeToNow(comments.createdAt)}</span>
+                    </time>
+                  </span>
                 </div>
-                <time
-                  className="text-xs text-gray-400"
-                  title={publishedDateFormatted(comments.createdAt)} 
-                  dateTime={comments.createdAt}
-                >
-                  {publishedDateRelativeToNow(comments.createdAt)}
-                </time>
+              
+                <DeleteModal commentId={comments._id!} bookId={bookId}/>
               </div>
               <StarsRating rating={comments.commentRating} size={15}/>
               <p className="text-sm mt-4">{comments.comment}</p>

@@ -12,7 +12,7 @@ export default function Home() {
         <div className="text-white">
           <h1 className=" text-3xl sm:text-5xl font-semibold">Não há nada <br/>melhor que ler</h1>
           <p className="text-zinc-100 py-6">Compartilhe suas avaliações!</p>
-          <Link href="/share" className="transition bg-white rounded-2xl py-2 px-8 text-emerald-400 font-semibold">Compartilhar</Link>
+          <Link href="/share" className="bg-white rounded-2xl py-2 px-8 text-emerald-400 font-semibold transition hover:bg-zinc-50">Compartilhar</Link>
         </div>
         <img className="hidden lg:block h-96" src="/images/book.svg" alt="livro" />
       </section>

@@ -25,13 +25,13 @@ export const BannerShareBook = () => {
             {session ? (
               <Link
                 href="/share"
-                className="bg-emerald-300 transition text-white font-bold py-3 px-6 rounded-md hover:bg-emerald-500 ">
+                className="bg-emerald-400 transition text-white font-bold py-3 px-6 rounded-md hover:bg-emerald-500 ">
                 Compartilhar
               </Link>
             ):(
               <Link
                 href="/authenticate"
-                className="bg-emerald-300 transition text-white font-bold py-3 px-6 rounded-md hover:bg-emerald-500 ">
+                className="bg-emerald-400 transition text-white font-bold py-3 px-6 rounded-md hover:bg-emerald-500 ">
                 Faça login
               </Link>
             )}

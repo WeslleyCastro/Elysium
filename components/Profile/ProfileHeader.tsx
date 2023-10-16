@@ -13,12 +13,14 @@ interface ProfileHeaderProps {
 export const ProfileHeader = ({userName, userImage, userDescription, _id}: ProfileHeaderProps ) => {
   const {data: session} = useSession()
   let description = userDescription ? userDescription : "Sem descrição"
+
+  console.log(userImage)
   
   return(
     <div className="flex items-center gap-8 pl-8 pt-8 sm:pl-16">
       <img
-        className="rounded-full w-28 outline outline-4 outline-emerald-500"
-        src={userImage}
+        className="rounded-full w-28 outline outline-4 outline-emerald-500 h-28"
+        src={userImage!}
         alt="imagem de perfil"
       />
       <div>

@@ -56,7 +56,7 @@ export const CommentTextArea = ({ bookId }: CommentsProps) => {
             {...register("comment")}
             maxLength={280}
           />
-          <button className="flex items-center justify-center gap-2 py-2 px-4 bg-emerald-300 text-sm text-white rounded-2xl transition hover:scale-105">
+          <button className="flex items-center justify-center gap-2 py-2 px-4 bg-emerald-400 text-sm text-white rounded-2xl transition hover:scale-105">
             <PaperPlaneRight className="sm:block" size={20}/><span className="hidden sm:block">Comentar</span>
           </button>
         </div>

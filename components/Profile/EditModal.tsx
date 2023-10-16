@@ -35,7 +35,7 @@ export const EditModal = ({userId}: {userId: string}) => {
         <AiFillEdit size={20} className="cursor-pointer absolute -right-8 -top-0.5"/>
       </Dialog.Trigger>  
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed w-screen h-screen inset-0 bg-black opacity-80 z-50"/>    
+        <Dialog.Overlay className="fixed w-screen h-screen inset-0 bg-black opacity-30 z-50"/>    
 
         <Dialog.Content className="center-modal w-full sm:w-[500px] border rounded-lg bg-white px-4 py-8 z-50">
           <Dialog.Title className="font-semibold text-lg text-emerald-500 mb-8">

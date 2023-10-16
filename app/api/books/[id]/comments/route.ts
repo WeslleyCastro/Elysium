@@ -88,3 +88,31 @@ export const POST = async(req: NextRequest, params: Params) => {
     return NextResponse.json({message: "Falha ao enviar comentario", status: 505})
   }
 }
+
+export const DELETE = async(req: NextRequest, params: Params) => {
+  const { commentId } = await req.json() 
+  
+  const getParams = params.params.id   // Book id
+
+  try {
+    connectToDB()
+    
+    const isDeleted = await Comments.findByIdAndDelete(commentId)
+    
+    if(!isDeleted) throw new Error("Failed to delete comment") 
+
+    const urlComments = `${process.env.BASEURL}/api/books/${getParams}/comments`
+    const getCommentsData = await fetch(urlComments)
+    const getComments: CommentInterface[] = await getCommentsData.json()
+  
+    //Sum all comments rating in database
+    const commentRatingCount = getComments.reduce((acc: number, comment: CommentInterface) => acc + comment.commentRating, 0)
+    
+    await Book.findByIdAndUpdate(getParams, {rating: commentRatingCount.toFixed(1), new: true})
+    
+    return NextResponse.json({status: 200})
+
+  } catch (error) {
+    console.log(error)
+  }
+}
