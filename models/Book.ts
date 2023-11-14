@@ -19,7 +19,8 @@ export interface BookInterface {
 const BookSchema = new Schema<BookInterface>({
   creator: {
     type: Schema.Types.ObjectId,
-    ref: "users"
+    ref: "users",
+    required: true,
   },
   title: {
     type: String,
@@ -51,7 +52,7 @@ const BookSchema = new Schema<BookInterface>({
   },
   creator_rating: {
     type: Number,
-    requed: true
+    required: true
   }
 })
 
