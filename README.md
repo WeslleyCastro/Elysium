@@ -1,34 +1,89 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![Badge](https://img.shields.io/badge/STATUS-DESENVOLVIMENTO-orange)
 
-## Getting Started
+# 📖 Elysium
+  Compartilhe e descubra novos livros. Veja as avaliações e comentarios do livro que esta interessado!
 
-First, run the development server:
+## <a href="https://elysium-books.vercel.app">Acesse o site</a>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+<img src="https://github.com/WeslleyCastro/Elysium/assets/117310795/cb7ec9be-f77d-440d-a3dc-677c475500d9" alt="Página inical do site Elysium" width="700">
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🖥️ Algumas das tecnologias utilizadas
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- MongoDB e Mongoose
+- Next
+- NextAuth
+- SWR
+- Swiper
+- Radix UI (modal)
+- bcryptjs
+- React-hook-form
+- React-toastify
+- Tailwind
+- Typescript
+- javaScript
 
-## Learn More
+## Requesições GET e POST
 
-To learn more about Next.js, take a look at the following resources:
+  Para realizar o registro dos livros do usuario segue o schema <b>books</b> simplificado:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  ```typescript
+  {
+    creator: {
+      type: Schema.Types.ObjectId,
+      ref: "users",
+    },
+    title: String,
+    categorie?: String,
+    author: String,
+    price?: Number, 
+    number_pages?: Number,
+    description: String,
+    image: String,
+    rating?: Number,
+    creator_rating: Number
+  }
+  ```
+  O <b>creator</b> esta referenciando o schema de usuario chamado <b>users</b> simplificado:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  ```typescript
+  {
+    email: String,
+    username: String,
+    password: String,
+    description: String,
+    image?: String,
+  }
+  ```
 
-## Deploy on Vercel
+  Quando é feito a requisição GET com o método populate do mongoose, a requisição retorna os dados do schema <b>books</b> e o creator com os dados do usuario que compartilhou o livro seguindo o schema <b>users</b>.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  No registro do livro para ser compartilhado na página <b>/share</b>, a imagem do livro selecionada passa por uma função chamada <b>imageToBase64</b> que recebe a imagem, e através do Event converte para base64 para ser enviado para o banco de dados. Segue a função citada:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+  ```typescript
+    export const imageToBase64 = async(e: ChangeEvent<HTMLInputElement>) => {
+      const imageConvert = await convertToBase64(e.target.files![0])
+      return imageConvert
+    }
+  
+    const convertToBase64 = (file: Blob) => {
+      return new Promise((resolve, reject) => {
+        const fileReader = new FileReader()
+        fileReader.readAsDataURL(file)
+        fileReader.onload = () => {
+          resolve(fileReader.result)
+        }
+        fileReader.onerror = (error) => {
+          reject(error)
+        }
+      })
+    }
+  ```
+  Após converter a imagem, segue o envio para o banco de dados através do route handler, que recebe os dados passado no body da requisição e é enviado para o bando de dados. No momento que a requisição é enviada, por conta do ``` export const dynamic = 'force-dynamic' ``` que contem onde esta sendo feito a requisição GET de todos os livros, os dados serão atualizados novamente, assim retornando os livros atualizados na página principal. 
+
+  
+
+  
+  
+
+  
